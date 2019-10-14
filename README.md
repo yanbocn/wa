@@ -1,11 +1,13 @@
 # wa
 wa is robotgo imitation
 
+	$ ge get github.com/yanbocn/wa
+
 demo.go
 
         package main
         
-        import "wa"
+        import "github.com/yanbocn/wa"
         
         func main() {
 	        wa.MouseClickPos(50, 50)  
