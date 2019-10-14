@@ -5,9 +5,7 @@ demo
 
 package main
 
-import (
-	"wa"
-)
+import "wa"
 
 func main() {
 	wa.MouseClickPos(50, 50)
