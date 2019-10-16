@@ -1,7 +1,7 @@
 # wa
 wa is robotgo imitation
 
-	$ ge get github.com/yanbocn/wa
+	$ go get github.com/yanbocn/wa
 
 demo.go
 
