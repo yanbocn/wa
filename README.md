@@ -14,3 +14,14 @@ demo.go
 	        wa.Sleep(1)
 	        wa.TypeStr("ahahaha")
         }
+
+package wa // import "wa"
+
+		func GetCursorPos() win.POINT
+		func KeyBd(s string, args ...string)
+		func MouseClick(args ...string)
+		func MouseClickPos(x, y int32)
+		func SetCursorPos(x, y int32)
+		func Sleep(t int)
+		func ToGBK(rd io.Reader) *mahonia.Reader
+		func TypeStr(str string)
