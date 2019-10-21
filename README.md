@@ -25,3 +25,5 @@ package wa // import "wa"
 		func Sleep(t int)
 		func ToGBK(rd io.Reader) *mahonia.Reader
 		func TypeStr(str string)
+		func GetPixel(x, y int32) win.COLORREF
+		
