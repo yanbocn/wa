@@ -20,31 +20,25 @@ func SetCursorPos(x, y int32) {
 
 //MouseClick click
 func MouseClick(args ...string) {
-	if len(args) == 0 {
-		var input, input2 win.MOUSE_INPUT
-		input.Mi.DwFlags = win.MOUSEEVENTF_LEFTDOWN
-		input2.Mi.DwFlags = win.MOUSEEVENTF_LEFTUP
-		win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-		// Sleep(1)
-		win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	switch len(args) {
+	case 0:
+		liftClick()
 		return
-	}
-	switch args[0] {
-	case "", "left":
-		var input, input2 win.MOUSE_INPUT
-		input.Mi.DwFlags = win.MOUSEEVENTF_LEFTDOWN
-		input2.Mi.DwFlags = win.MOUSEEVENTF_LEFTUP
-		win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-		// Sleep(1)
-		win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
-		return
-	case "right":
-		var input, input2 win.MOUSE_INPUT
-		input.Mi.DwFlags = win.MOUSEEVENTF_RIGHTDOWN
-		input2.Mi.DwFlags = win.MOUSEEVENTF_RIGHTUP
-		win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-		// Sleep(1)
-		win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	case 1:
+		switch args[0] {
+		case "left":
+			liftClick()
+			return
+		case "right":
+			rightClick()
+			return
+		}
+	case 2:
+		if args[0] == "left" && args[1] == "double" {
+			liftClick()
+			liftClick()
+			return
+		}
 		return
 	}
 }
@@ -53,4 +47,20 @@ func MouseClick(args ...string) {
 func MouseClickPos(x, y int32) {
 	win.SetCursorPos(x, y)
 	MouseClick()
+}
+
+func liftClick() {
+	var input, input2 win.MOUSE_INPUT
+	input.Mi.DwFlags = win.MOUSEEVENTF_LEFTDOWN
+	input2.Mi.DwFlags = win.MOUSEEVENTF_LEFTUP
+	win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+}
+
+func rightClick() {
+	var input, input2 win.MOUSE_INPUT
+	input.Mi.DwFlags = win.MOUSEEVENTF_RIGHTDOWN
+	input2.Mi.DwFlags = win.MOUSEEVENTF_RIGHTUP
+	win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }
