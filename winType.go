@@ -28,5 +28,5 @@ func unicodeType(value uint16) {
 	input[1].Ki.WScan = value
 	input[1].Ki.DwFlags = win.KEYEVENTF_KEYUP | 0x4 // KEYEVENTF_UNICODE;
 	win.SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
-	win.SendInput(2, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+	win.SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
 }
