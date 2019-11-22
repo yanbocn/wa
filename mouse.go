@@ -2,20 +2,19 @@ package wa
 
 import (
 	"unsafe"
-
-	"github.com/lxn/win"
 )
 
-//GetCursorPos mouse pos
-func GetCursorPos() win.POINT {
-	pt := win.POINT{X: 0, Y: 0}
-	win.GetCursorPos(&pt)
-	return pt
+//GetMousePos mouse pos
+func GetMousePos() (int32, int32) {
+	var pt point
+	GetCursorPos(&pt)
+	return pt.X, pt.Y
 }
 
-//SetCursorPos set x, y
-func SetCursorPos(x, y int32) {
-	win.SetCursorPos(x, y)
+//MouseClickPos x, y click
+func MouseClickPos(x, y int32) {
+	SetCursorPos(x, y)
+	MouseClick()
 }
 
 //MouseClick click
@@ -43,24 +42,18 @@ func MouseClick(args ...string) {
 	}
 }
 
-//MouseClickPos x, y click
-func MouseClickPos(x, y int32) {
-	win.SetCursorPos(x, y)
-	MouseClick()
-}
-
 func liftClick() {
-	var input, input2 win.MOUSE_INPUT
-	input.Mi.DwFlags = win.MOUSEEVENTF_LEFTDOWN
-	input2.Mi.DwFlags = win.MOUSEEVENTF_LEFTUP
-	win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-	win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	var input, input2 mouseInput
+	input.Mi.DwFlags = mouseEventLeftDown
+	input2.Mi.DwFlags = mouseEventLeftUp
+	SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }
 
 func rightClick() {
-	var input, input2 win.MOUSE_INPUT
-	input.Mi.DwFlags = win.MOUSEEVENTF_RIGHTDOWN
-	input2.Mi.DwFlags = win.MOUSEEVENTF_RIGHTUP
-	win.SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-	win.SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	var input, input2 mouseInput
+	input.Mi.DwFlags = mouseEventRightDown
+	input2.Mi.DwFlags = mouseEventRightUp
+	SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }

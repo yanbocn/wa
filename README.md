@@ -16,7 +16,7 @@ demo.go
 
 package wa // import "wa"
 
-		func GetCursorPos() win.POINT
+		func GetMousePos() (int32, int32)
 		func KeyBd(s string, args ...string)
 		func MouseClick(args ...string)
 		func MouseClickPos(x, y int32)

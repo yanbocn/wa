@@ -2,8 +2,6 @@ package wa
 
 import (
 	"unsafe"
-
-	"github.com/lxn/win"
 )
 
 const (
@@ -16,7 +14,7 @@ const (
 //KeyBd key
 func KeyBd(s string, args ...string) {
 	if len(args) == 0 {
-		var input [2]win.KEYBD_INPUT
+		var input [2]keyBdInput
 		switch s {
 		case "enter":
 			input[0].Ki.WVk, input[1].Ki.WVk = ent, ent
@@ -29,15 +27,15 @@ func KeyBd(s string, args ...string) {
 			input[0].Ki.WVk, input[1].Ki.WVk = uint16(t[0]), uint16(t[0])
 			break
 		}
-		input[0].Type = win.INPUT_KEYBOARD
-		input[1].Type = win.INPUT_KEYBOARD
-		input[1].Ki.DwFlags = win.KEYEVENTF_KEYUP
-		win.SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
-		win.SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+		input[0].Type = inputKeyBoard
+		input[1].Type = inputKeyBoard
+		input[1].Ki.DwFlags = keyEventKeyUp
+		SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
+		SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
 		return
 	}
 	t := []byte(s)
-	var input [4]win.KEYBD_INPUT
+	var input [4]keyBdInput
 	input[0].Ki.WVk, input[1].Ki.WVk = uint16(t[0]), uint16(t[0])
 	switch args[0] {
 	case "ctrl":
@@ -47,15 +45,14 @@ func KeyBd(s string, args ...string) {
 		input[2].Ki.WVk, input[3].Ki.WVk = alt, alt
 		break
 	}
-	input[0].Type = win.INPUT_KEYBOARD
-	input[1].Type = win.INPUT_KEYBOARD
-	input[2].Type = win.INPUT_KEYBOARD
-	input[3].Type = win.INPUT_KEYBOARD
-	win.SendInput(1, unsafe.Pointer(&input[2]), int32(unsafe.Sizeof(input[2])))
-	win.SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
-	input[1].Ki.DwFlags = win.KEYEVENTF_KEYUP
-	input[3].Ki.DwFlags = win.KEYEVENTF_KEYUP
-	win.SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
-	win.SendInput(1, unsafe.Pointer(&input[3]), int32(unsafe.Sizeof(input[3])))
-
+	input[0].Type = inputKeyBoard
+	input[1].Type = inputKeyBoard
+	input[2].Type = inputKeyBoard
+	input[3].Type = inputKeyBoard
+	SendInput(1, unsafe.Pointer(&input[2]), int32(unsafe.Sizeof(input[2])))
+	SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
+	input[1].Ki.DwFlags = keyEventKeyUp
+	input[3].Ki.DwFlags = keyEventKeyUp
+	SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+	SendInput(1, unsafe.Pointer(&input[3]), int32(unsafe.Sizeof(input[3])))
 }
