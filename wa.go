@@ -8,3 +8,10 @@ import (
 func Sleep(t int) {
 	time.Sleep(time.Duration(t) * time.Second)
 }
+
+func GetPixelColor(x, y int32) COLORREF {
+	h := GetDesktopWindow()
+	dc := GetDC(h)
+	co := GetPixel(dc, x, y)
+	return co
+}

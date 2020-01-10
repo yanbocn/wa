@@ -11,6 +11,11 @@ func GetMousePos() (int32, int32) {
 	return pt.X, pt.Y
 }
 
+//SetMousePos mouse pos
+func SetMousePos(x, y int32) {
+	SetCursorPos(x, y)
+}
+
 //MouseClickPos x, y click
 func MouseClickPos(x, y int32) {
 	SetCursorPos(x, y)

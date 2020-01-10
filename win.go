@@ -11,6 +11,12 @@ type point struct {
 	X, Y int32
 }
 
+type (
+	HWND     uint32
+	HDC      uint32
+	COLORREF uint32
+)
+
 // INPUT Type
 const (
 	inputMouse    = 0
@@ -77,10 +83,16 @@ type mouseIn struct {
 }
 
 var (
-	libuser32    *windows.LazyDLL
-	sendInput    *windows.LazyProc
-	setCursorPos *windows.LazyProc
-	getCursorPos *windows.LazyProc
+	libuser32        *windows.LazyDLL
+	sendInput        *windows.LazyProc
+	setCursorPos     *windows.LazyProc
+	getCursorPos     *windows.LazyProc
+	getActiveWindow  *windows.LazyProc
+	getDC            *windows.LazyProc
+	getDesktopWindow *windows.LazyProc
+
+	libgdi32 *windows.LazyDLL
+	getPixel *windows.LazyProc
 )
 
 func init() {
@@ -88,6 +100,12 @@ func init() {
 	sendInput = libuser32.NewProc("SendInput")
 	setCursorPos = libuser32.NewProc("SetCursorPos")
 	getCursorPos = libuser32.NewProc("GetCursorPos")
+	getActiveWindow = libuser32.NewProc("GetActiveWindow")
+	getDC = libuser32.NewProc("GetDC")
+	getDesktopWindow = libuser32.NewProc("GetDesktopWindow")
+
+	libgdi32 = windows.NewLazySystemDLL("gdi32.dll")
+	getPixel = libgdi32.NewProc("GetPixel")
 }
 
 //SendInput xx
@@ -115,4 +133,36 @@ func GetCursorPos(lpPoint *point) bool {
 		0,
 		0)
 	return ret != 0
+}
+
+func GetPixel(hdc HDC, nXPos, nYPos int32) COLORREF {
+	ret, _, _ := syscall.Syscall(getPixel.Addr(), 3,
+		uintptr(hdc),
+		uintptr(nXPos),
+		uintptr(nYPos))
+	return COLORREF(ret)
+}
+
+func GetDesktopWindow() HWND {
+	ret, _, _ := syscall.Syscall(getDesktopWindow.Addr(), 0,
+		0,
+		0,
+		0)
+	return HWND(ret)
+}
+
+func GetActiveWindow() HWND {
+	ret, _, _ := syscall.Syscall(getActiveWindow.Addr(), 0,
+		0,
+		0,
+		0)
+	return HWND(ret)
+}
+
+func GetDC(hWnd HWND) HDC {
+	ret, _, _ := syscall.Syscall(getDC.Addr(), 1,
+		uintptr(hWnd),
+		0,
+		0)
+	return HDC(ret)
 }
