@@ -12,8 +12,11 @@ type point struct {
 }
 
 type (
-	HWND     uint32
-	HDC      uint32
+	// HWND uint32
+	HWND uint32
+	// HDC  uint32
+	HDC uint32
+	// COLORREF uint32
 	COLORREF uint32
 )
 
@@ -135,6 +138,7 @@ func GetCursorPos(lpPoint *point) bool {
 	return ret != 0
 }
 
+// GetPixel color
 func GetPixel(hdc HDC, nXPos, nYPos int32) COLORREF {
 	ret, _, _ := syscall.Syscall(getPixel.Addr(), 3,
 		uintptr(hdc),
@@ -143,6 +147,7 @@ func GetPixel(hdc HDC, nXPos, nYPos int32) COLORREF {
 	return COLORREF(ret)
 }
 
+//GetDesktopWindow dosktop hwnd
 func GetDesktopWindow() HWND {
 	ret, _, _ := syscall.Syscall(getDesktopWindow.Addr(), 0,
 		0,
@@ -151,6 +156,7 @@ func GetDesktopWindow() HWND {
 	return HWND(ret)
 }
 
+//GetActiveWindow actwindow hwnd
 func GetActiveWindow() HWND {
 	ret, _, _ := syscall.Syscall(getActiveWindow.Addr(), 0,
 		0,
@@ -159,6 +165,7 @@ func GetActiveWindow() HWND {
 	return HWND(ret)
 }
 
+//GetDC dc
 func GetDC(hWnd HWND) HDC {
 	ret, _, _ := syscall.Syscall(getDC.Addr(), 1,
 		uintptr(hWnd),
