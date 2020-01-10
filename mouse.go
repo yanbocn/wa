@@ -7,18 +7,18 @@ import (
 //GetMousePos mouse pos
 func GetMousePos() (int32, int32) {
 	var pt point
-	GetCursorPos(&pt)
+	getCursorPosa(&pt)
 	return pt.X, pt.Y
 }
 
 //SetMousePos mouse pos
 func SetMousePos(x, y int32) {
-	SetCursorPos(x, y)
+	setCursorPosa(x, y)
 }
 
 //MouseClickPos x, y click
 func MouseClickPos(x, y int32) {
-	SetCursorPos(x, y)
+	setCursorPosa(x, y)
 	MouseClick()
 }
 
@@ -51,14 +51,14 @@ func liftClick() {
 	var input, input2 mouseInput
 	input.Mi.DwFlags = mouseEventLeftDown
 	input2.Mi.DwFlags = mouseEventLeftUp
-	SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-	SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	sendInputa(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	sendInputa(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }
 
 func rightClick() {
 	var input, input2 mouseInput
 	input.Mi.DwFlags = mouseEventRightDown
 	input2.Mi.DwFlags = mouseEventRightUp
-	SendInput(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
-	SendInput(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+	sendInputa(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	sendInputa(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }

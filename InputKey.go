@@ -30,8 +30,8 @@ func InputKey(s string, args ...string) {
 		input[0].Type = inputKeyBoard
 		input[1].Type = inputKeyBoard
 		input[1].Ki.DwFlags = keyEventKeyUp
-		SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
-		SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+		sendInputa(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
+		sendInputa(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
 		return
 	}
 	t := []byte(s)
@@ -49,10 +49,10 @@ func InputKey(s string, args ...string) {
 	input[1].Type = inputKeyBoard
 	input[2].Type = inputKeyBoard
 	input[3].Type = inputKeyBoard
-	SendInput(1, unsafe.Pointer(&input[2]), int32(unsafe.Sizeof(input[2])))
-	SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
+	sendInputa(1, unsafe.Pointer(&input[2]), int32(unsafe.Sizeof(input[2])))
+	sendInputa(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
 	input[1].Ki.DwFlags = keyEventKeyUp
 	input[3].Ki.DwFlags = keyEventKeyUp
-	SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
-	SendInput(1, unsafe.Pointer(&input[3]), int32(unsafe.Sizeof(input[3])))
+	sendInputa(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+	sendInputa(1, unsafe.Pointer(&input[3]), int32(unsafe.Sizeof(input[3])))
 }

@@ -25,6 +25,6 @@ func unicodeType(value uint16) {
 	input[1].Ki.WVk = 0
 	input[1].Ki.WScan = value
 	input[1].Ki.DwFlags = keyEventKeyUp | keyEventUnicode
-	SendInput(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
-	SendInput(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
+	sendInputa(1, unsafe.Pointer(&input[0]), int32(unsafe.Sizeof(input[0])))
+	sendInputa(1, unsafe.Pointer(&input[1]), int32(unsafe.Sizeof(input[1])))
 }

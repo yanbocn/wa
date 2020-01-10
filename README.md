@@ -9,9 +9,9 @@ demo.go
         import "github.com/yanbocn/wa"
         
         func main() {
-	        wa.MouseClickPos(50, 50)  
+	        wa.MouseClickPos(50, 50)
 	        wa.Sleep(1)
-	        wa.TypeStr("ahahaha")
+	        wa.InputStr("ahahaha")
         }
 
 
@@ -27,11 +27,4 @@ package wa // import "github.com/yanbocn/wa"
 		func SetCursorPos(x, y int32) bool
 		func SetMousePos(x, y int32)
 		func Sleep(t int)
-		type COLORREF uint32
-    	func GetPixel(hdc HDC, nXPos, nYPos int32) COLORREF
     	func GetPixelColor(x, y int32) COLORREF
-		type HDC uint32
-    	func GetDC(hWnd HWND) HDC
-		type HWND uint32
-    	func GetActiveWindow() HWND
-    	func GetDesktopWindow() HWND

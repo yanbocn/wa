@@ -10,9 +10,9 @@ func Sleep(t int) {
 }
 
 //GetPixelColor get color
-func GetPixelColor(x, y int32) COLORREF {
-	h := GetDesktopWindow()
-	dc := GetDC(h)
-	co := GetPixel(dc, x, y)
+func GetPixelColor(x, y int32) uint32 {
+	h := getDesktopWindowa()
+	dc := getDCa(h)
+	co := getPixela(dc, x, y)
 	return co
 }

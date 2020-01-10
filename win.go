@@ -11,15 +11,6 @@ type point struct {
 	X, Y int32
 }
 
-type (
-	// HWND uint32
-	HWND uint32
-	// HDC  uint32
-	HDC uint32
-	// COLORREF uint32
-	COLORREF uint32
-)
-
 // INPUT Type
 const (
 	inputMouse    = 0
@@ -111,8 +102,7 @@ func init() {
 	getPixel = libgdi32.NewProc("GetPixel")
 }
 
-//SendInput xx
-func SendInput(nInput uint32, pInput unsafe.Pointer, cbSize int32) uint32 {
+func sendInputa(nInput uint32, pInput unsafe.Pointer, cbSize int32) uint32 {
 	ret, _, _ := syscall.Syscall(sendInput.Addr(), 3,
 		uintptr(nInput),
 		uintptr(pInput),
@@ -120,8 +110,7 @@ func SendInput(nInput uint32, pInput unsafe.Pointer, cbSize int32) uint32 {
 	return uint32(ret)
 }
 
-//SetCursorPos x, y
-func SetCursorPos(x, y int32) bool {
+func setCursorPosa(x, y int32) bool {
 	ret, _, _ := syscall.Syscall(setCursorPos.Addr(), 2,
 		uintptr(x),
 		uintptr(y),
@@ -129,8 +118,7 @@ func SetCursorPos(x, y int32) bool {
 	return ret != 0
 }
 
-//GetCursorPos x
-func GetCursorPos(lpPoint *point) bool {
+func getCursorPosa(lpPoint *point) bool {
 	ret, _, _ := syscall.Syscall(getCursorPos.Addr(), 1,
 		uintptr(unsafe.Pointer(lpPoint)),
 		0,
@@ -138,38 +126,34 @@ func GetCursorPos(lpPoint *point) bool {
 	return ret != 0
 }
 
-// GetPixel color
-func GetPixel(hdc HDC, nXPos, nYPos int32) COLORREF {
+func getPixela(hdc uint32, nXPos, nYPos int32) uint32 {
 	ret, _, _ := syscall.Syscall(getPixel.Addr(), 3,
 		uintptr(hdc),
 		uintptr(nXPos),
 		uintptr(nYPos))
-	return COLORREF(ret)
+	return uint32(ret)
 }
 
-//GetDesktopWindow dosktop hwnd
-func GetDesktopWindow() HWND {
+func getDesktopWindowa() uint32 {
 	ret, _, _ := syscall.Syscall(getDesktopWindow.Addr(), 0,
 		0,
 		0,
 		0)
-	return HWND(ret)
+	return uint32(ret)
 }
 
-//GetActiveWindow actwindow hwnd
-func GetActiveWindow() HWND {
+func getActiveWindowa() uint32 {
 	ret, _, _ := syscall.Syscall(getActiveWindow.Addr(), 0,
 		0,
 		0,
 		0)
-	return HWND(ret)
+	return uint32(ret)
 }
 
-//GetDC dc
-func GetDC(hWnd HWND) HDC {
+func getDCa(hWnd uint32) uint32 {
 	ret, _, _ := syscall.Syscall(getDC.Addr(), 1,
 		uintptr(hWnd),
 		0,
 		0)
-	return HDC(ret)
+	return uint32(ret)
 }
