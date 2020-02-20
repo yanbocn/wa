@@ -62,3 +62,14 @@ func rightClick() {
 	sendInputa(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
 	sendInputa(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
 }
+
+//MouseClickMovePos move
+func MouseClickMovePos(x, y int32) {
+	var input, input2 mouseInput
+	input.Mi.DwFlags = mouseEventLeftDown
+	input2.Mi.DwFlags = mouseEventLeftUp
+	sendInputa(1, unsafe.Pointer(&input), int32(unsafe.Sizeof(input)))
+	setCursorPosa(x, y)
+	Sleep(1)
+	sendInputa(1, unsafe.Pointer(&input2), int32(unsafe.Sizeof(input2)))
+}

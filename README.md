@@ -24,3 +24,4 @@ package wa // import "github.com/yanbocn/wa"
 		func SetMousePos(x, y int32)
 		func Sleep(t int)
     	func GetPixelColor(x, y int32) uint32
+		func MouseClickMovePos(x, y int32)
