@@ -84,6 +84,8 @@ var (
 	getActiveWindow  *windows.LazyProc
 	getDC            *windows.LazyProc
 	getDesktopWindow *windows.LazyProc
+	releaseDC		 *windows.LazyProc
+
 
 	libgdi32 *windows.LazyDLL
 	getPixel *windows.LazyProc
@@ -97,6 +99,7 @@ func init() {
 	getActiveWindow = libuser32.NewProc("GetActiveWindow")
 	getDC = libuser32.NewProc("GetDC")
 	getDesktopWindow = libuser32.NewProc("GetDesktopWindow")
+	releaseDC = libuser32.NewProc("ReleaseDC")
 
 	libgdi32 = windows.NewLazySystemDLL("gdi32.dll")
 	getPixel = libgdi32.NewProc("GetPixel")
@@ -154,6 +157,14 @@ func getDCa(hWnd uint32) uint32 {
 	ret, _, _ := syscall.Syscall(getDC.Addr(), 1,
 		uintptr(hWnd),
 		0,
+		0)
+	return uint32(ret)
+}
+
+func releaseDCa(hWnd uint32, hdc uint32) uint32 {
+	ret, _, _ := syscall.Syscall(releaseDC.Addr(),2,
+		uintptr(hWnd),
+		uintptr(hdc),
 		0)
 	return uint32(ret)
 }
